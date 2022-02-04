@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(clothes) {
+        var answer = 0;
+
+        let map = new Map();
+
+        for (let i of clothes) {
+          if (map.has(i[1])) {
+            map.set(i[1], map.get(i[1]) + 1);
+          } else {
+            map.set(i[1], 1);
+          }
+        }
+
+        console.log(map);
+
+        let arr_value = [];
+
+        for (let [key, value] of map) {
+          arr_value.push(value + 1);
+        }
+
+        console.log(arr_value);
+
+        answer = arr_value.reduce((a, b) => a * b) - 1;
+
+        return answer;
+      }
+
+      let arr = [
+        ["yellowhat", "headgear"],
+        ["bluesunglasses", "eyewear"],
+        ["green_turban", "headgear"],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
