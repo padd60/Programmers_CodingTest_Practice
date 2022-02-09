@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function check(answers, arr) {
+        let cnt = 0;
+        for (let i = 0; i < arr.length; i++) {
+          if (answers[i] === arr[i]) {
+            cnt++;
+          }
+        }
+        return cnt;
+      }
+      function solution(answers) {
+        let answer = [];
+
+        let first = [1, 2, 3, 4, 5];
+
+        let second = [2, 1, 2, 3, 2, 4, 2, 5];
+
+        let third = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
+
+        let fisrt_arr = [];
+
+        for (let i = 0; i < answers.length; i++) {
+          fisrt_arr.push(first[i % 5]);
+        }
+        let second_arr = [];
+
+        for (let i = 0; i < answers.length; i++) {
+          second_arr.push(second[i % 8]);
+        }
+        let third_arr = [];
+
+        for (let i = 0; i < answers.length; i++) {
+          third_arr.push(third[i % 10]);
+        }
+
+        let check_arr = [
+          check(answers, fisrt_arr),
+          check(answers, second_arr),
+          check(answers, third_arr),
+        ];
+
+        let max = Math.max(...check_arr);
+
+        for (let i = 0; i < check_arr.length; i++) {
+          if (max === check_arr[i]) answer.push(i + 1);
+        }
+
+        return answer;
+      }
+
+      let arr = [1, 2, 3, 4, 5];
+      let arr2 = [1, 3, 2, 4, 2];
+      console.log(solution(arr2));
+    </script>
+  </body>
+</html>
