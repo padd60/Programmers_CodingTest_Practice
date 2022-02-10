@@ -1,0 +1,48 @@
+<!-- 문제
+  배열과 수를 주어주는데
+  배열의 인접한 요소들끼리의 차이가 주어진 수 이하가 되도록 하기 위해 두개의 요소를 스위칭하는데
+  이때 최소로 바꾸면서 인접요소끼리의 차이가 주어진 수 이하일 경우의 수를 반환해라
+  만약 아무리 바꿔도 주어진 수 이하로 인접요소끼리 차이를 좁힐 수 없다면 -1을 반환해라.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(numbers, K) {
+        let answer = 0;
+
+        for (let i = 0; i < numbers.length - 1; i++) {
+          let difference = Math.abs(numbers[i] - numbers[i + 1]);
+
+          if (difference > K) {
+            let search = numbers.filter((item) => item <= difference);
+
+            let idx = numbers.findIndex((item) => item === Math.max(...search));
+
+            tmp1 = numbers[i] - numbers[idx];
+            tmp2 = numbers[i + 1] - numbers[idx];
+
+            if (tmp1 < tmp2) {
+              [numbers[i], numbers[idx]] = [numbers[idx], numbers[i]];
+            } else if (tmp1 > tmp2) {
+              [numbers[i + 1], numbers[idx]] = [numbers[idx], numbers[i + 1]];
+            }
+            answer++;
+          }
+        }
+
+        return answer;
+      }
+
+      console.log(solution([10, 40, 30, 20], 20));
+      console.log(solution([3, 7, 2, 8, 6, 4, 5, 1], 3));
+    </script>
+  </body>
+</html>

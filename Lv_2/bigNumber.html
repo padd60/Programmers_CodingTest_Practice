@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(number, k) {
+        var answer = "";
+
+        let number_arr = [...number];
+
+        for (let i = 0; i < k; i++) {
+          for (let j = 0; j < number_arr.length - 1; j++) {
+            if (
+              (number_arr !== "9" && number_arr[j] < number_arr[j + 1]) ||
+              number_arr[j] === "0"
+            ) {
+              number_arr.splice(j, 1);
+              break;
+            }
+          }
+        }
+
+        if (number_arr.length > number.length - k) {
+          for (let i = 0; i < k; i++) {
+            number_arr.pop();
+          }
+        }
+
+        answer = number_arr.join("");
+
+        return answer;
+      }
+
+      let num1 = "1231234";
+      let num2 = "4177252841";
+      console.log(solution(num1, 3));
+      console.log(solution(num2, 4));
+      console.log(solution("10000", 1));
+      console.log(solution("654321", 1));
+      console.log(solution("654321", 5));
+    </script>
+  </body>
+</html>
