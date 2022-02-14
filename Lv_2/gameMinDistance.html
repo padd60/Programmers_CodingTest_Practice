@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(maps) {
+        let answer = 0;
+        let queue = [[0, 0]];
+        const dx = [1, 0, -1, 0];
+        const dy = [0, 1, 0, -1];
+
+        const visit = Array.from(Array(maps.length), () =>
+          Array(maps[0].length).fill(1)
+        );
+
+        while (queue.length) {
+          let [x, y] = queue.shift();
+
+          for (let j = 0; j < 4; j++) {
+            let nx = x + dx[j];
+            let ny = y + dy[j];
+
+            if (nx >= 0 && nx < maps.length && ny >= 0 && ny < maps[0].length) {
+              if (maps[nx][ny] === 1 && visit[nx][ny] === 1) {
+                visit[nx][ny] = visit[x][y] + 1;
+                queue.push([nx, ny]);
+              }
+            }
+          }
+        }
+
+        console.log(visit);
+
+        if (visit[maps.length - 1][maps[0].length - 1] === 1) return -1;
+        else return visit[maps.length - 1][maps[0].length - 1];
+
+        return answer;
+      }
+
+      console.log(
+        solution([
+          [1, 0, 1, 1, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 1, 1, 1],
+          [1, 1, 1, 0, 1],
+          [0, 0, 0, 0, 1],
+        ])
+      );
+    </script>
+  </body>
+</html>

@@ -18,31 +18,64 @@
       function solution(numbers, K) {
         let answer = 0;
 
-        for (let i = 0; i < numbers.length - 1; i++) {
-          let difference = Math.abs(numbers[i] - numbers[i + 1]);
+        for (let i = 1; i < numbers.length - 1; i++) {
+          const pre = Math.abs(numbers[i - 1] - numbers[i]);
+          const next = Math.abs(numbers[i] - numbers[i + 1]);
 
-          if (difference > K) {
-            let search = numbers.filter((item) => item <= difference);
+          if (pre <= K && next <= K) {
+            continue;
+          } else if (pre > K && next > K) {
+            console.log("둘다 큼");
+            const search = numbers.filter((item) => item <= pre);
 
-            let idx = numbers.findIndex((item) => item === Math.max(...search));
+            const max = Math.max(...search);
 
-            tmp1 = numbers[i] - numbers[idx];
-            tmp2 = numbers[i + 1] - numbers[idx];
+            const findIndex = numbers.findIndex((item) => item === max);
 
-            if (tmp1 < tmp2) {
-              [numbers[i], numbers[idx]] = [numbers[idx], numbers[i]];
-            } else if (tmp1 > tmp2) {
-              [numbers[i + 1], numbers[idx]] = [numbers[idx], numbers[i + 1]];
-            }
+            [numbers[i], numbers[findIndex]] = [numbers[findIndex], numbers[i]];
+
+            answer++;
+          } else if (pre > K && next < K) {
+            console.log("pre 큼");
+            const search = numbers.filter((item) => item <= pre);
+
+            const max = Math.max(...search);
+
+            const findIndex = numbers.findIndex((item) => item === max);
+
+            [numbers[i], numbers[findIndex]] = [numbers[findIndex], numbers[i]];
+
+            answer++;
+          } else if (next > K && pre < K) {
+            console.log("next 큼");
+            const search = numbers.filter((item) => item <= next);
+
+            const max = Math.max(...search);
+
+            const findIndex = numbers.findIndex((item) => item === max);
+
+            [numbers[i], numbers[findIndex]] = [numbers[findIndex], numbers[i]];
+
             answer++;
           }
+
+          console.log(numbers);
         }
+
+        if (answer === 0) return -1;
 
         return answer;
       }
 
       console.log(solution([10, 40, 30, 20], 20));
+      // 10 30 40 20 = 1
+
       console.log(solution([3, 7, 2, 8, 6, 4, 5, 1], 3));
+      // 4 7 5 8 6 3 2 1 = 2
+
+      // [6,9,11,4,5,2] 4
+
+      console.log(solution([6, 9, 11, 4, 5, 2], 4));
     </script>
   </body>
 </html>
