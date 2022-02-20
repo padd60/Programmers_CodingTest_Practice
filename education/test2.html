@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(research, n, k) {
+        let answer = "";
+
+        let issue = 2 * n * k;
+
+        let keyword = new Map();
+
+        let dailySearch = [];
+
+        let searchWord = new Set();
+
+        for (let i of research) {
+          for (let k of i) {
+            if (keyword.has(k)) {
+              keyword.set(k, keyword.get(k) + 1);
+            } else {
+              keyword.set(k, 1);
+            }
+
+            searchWord.add(k);
+          }
+
+          dailySearch.push(keyword);
+
+          keyword = new Map();
+        }
+
+        let searchWord_arr = [...searchWord];
+
+        let tmp = [];
+
+        for (let i = 0; i < searchWord_arr.length; i++) {
+          let check = false;
+          let sum = [];
+          let cnt = 0;
+          let checkIssueSearch = false;
+          let IssueCnt = 0;
+
+          for (let j = 0; j < dailySearch.length; j++) {
+            if (dailySearch[j].has(searchWord_arr[i])) {
+              sum.push(dailySearch[j].get(searchWord_arr[i]));
+            } else {
+              sum.shift();
+            }
+
+            if (sum.length > n) sum.shift();
+
+            if (sum.length >= n) {
+              cnt = sum.reduce((item, acc) => item + acc);
+
+              IssueCnt++;
+
+              for (let i of sum) {
+                if (i >= k && cnt >= issue) {
+                  check = true;
+                }
+              }
+            }
+          }
+
+          if (check === true) tmp.push([searchWord_arr[i], IssueCnt]);
+          IssueCnt = 0;
+        }
+
+        tmp.sort((a, b) => {
+          if (a[1] === b[1]) {
+            return a[0].charCodeAt() - b[0].charCodeAt();
+          } else {
+            return b[1] - a[1];
+          }
+        });
+
+        if (tmp.length <= 0) return "None";
+        else {
+          answer = tmp[0][0];
+          return answer;
+        }
+      }
+      console.log(solution(["abaaaa", "aaa", "abaaaaaa", "fzfffffffa"], 2, 2));
+      console.log(solution(["yxxy", "xxyyy"], 2, 1));
+      console.log(solution(["yxxy", "xxyyy", "yz"], 2, 1));
+      console.log(solution(["xy", "xy"], 1, 1));
+    </script>
+  </body>
+</html>
