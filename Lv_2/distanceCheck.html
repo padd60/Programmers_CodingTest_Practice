@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(places) {
+        let answer = [];
+
+        const dx = [-1, 0, 1, 0];
+        const dy = [0, -1, 0, 1];
+        let flag = false;
+
+        function DFS(room, x, y) {
+          for (let k = 0; k < 4; k++) {
+            let nx = x + dx[k];
+            let ny = y + dy[k];
+            let distance = Math.abs(x - nx) + Math.abs(y - ny);
+
+            if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5) {
+              if (places[room][nx][ny] === "P" && distance < 2) flag = true;
+              if (places[room][nx][ny] === "O") {
+                console.log(room, nx, ny);
+                let cnt = 0;
+                for (let r = 0; r < 4; r++) {
+                  let px = nx + dx[r];
+                  let py = ny + dy[r];
+                  if (
+                    px >= 0 &&
+                    px < 5 &&
+                    py >= 0 &&
+                    py < 5 &&
+                    places[room][px][py] === "P"
+                  ) {
+                    cnt++;
+                  }
+                }
+                if (cnt >= 2) flag = true;
+              }
+            }
+          }
+        }
+
+        for (let l = 0; l < places.length; l++) {
+          for (let i = 0; i < places[l].length; i++) {
+            for (let j = 0; j < places[l].length; j++) {
+              if (places[l][i][j] === "P") {
+                DFS(l, i, j);
+              }
+            }
+          }
+
+          if (flag === true) answer.push(0);
+          else answer.push(1);
+
+          flag = false;
+        }
+
+        return answer;
+      }
+
+      console.log(
+        solution([
+          ["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
+          ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"],
+          ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"],
+          ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"],
+          ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"],
+          ["POPOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
+        ])
+      );
+    </script>
+  </body>
+</html>
