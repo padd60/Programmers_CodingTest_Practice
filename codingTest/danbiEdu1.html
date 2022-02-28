@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(s1, s2) {
+        let answer = "";
+
+        let temp = [];
+
+        const minLength = Math.min(s1.length, s2.length);
+
+        let index1;
+
+        let index2;
+
+        let word1 = "";
+
+        let word2 = "";
+
+        for (let i = 0; i < minLength; i++) {
+          let str1 = s1.substring(0, i + 1);
+          let str2 = s2.substring(s2.length - (i + 1), s2.length);
+
+          if (str1 === str2) {
+            if (word1.length < str1.length) {
+              word1 = str1;
+              index1 = i + 1;
+            }
+          }
+        }
+
+        temp.push(s2 + s1.substring(index1, s1.length));
+
+        for (let i = 0; i < minLength; i++) {
+          let str1 = s2.substring(0, i + 1);
+          let str2 = s1.substring(s1.length - (i + 1), s1.length);
+
+          if (str1 === str2) {
+            if (word2.length < str1.length) {
+              word2 = str1;
+              index2 = i + 1;
+            }
+          }
+        }
+
+        temp.push(s1 + s2.substring(index2, s2.length));
+
+        temp.sort((a, b) => {
+          if (a.length === b.length) {
+            for (let i = 0; i < a.length; i++) {
+              if (a[i] === b[i]) continue;
+              else {
+                return a[i].charCodeAt() - b[i].charCodeAt();
+              }
+            }
+          } else {
+            return a.length - b.length;
+          }
+        });
+
+        answer = temp[0];
+
+        return answer;
+      }
+      console.log(solution("xyZA", "ABCxy"));
+      console.log(solution("AxA", "AyA"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(K, user_scores) {
+        let answer = 0;
+
+        let rank = [];
+
+        for (let x of user_scores) {
+          let [user, score] = x.split(" ");
+
+          if (rank.length >= K) {
+            let scoreCheck = false;
+
+            for (let i = 0; i < rank.length; i++) {
+              if (rank[i][1] <= score && rank[i][0] !== user) {
+                console.log(user, score);
+                rank.splice(i, 1, [user, score]);
+                answer++;
+              }
+
+              if (rank[i][0] === user && rank[i][1] < score) {
+                console.log(user, score);
+                rank.splice(i, 1, [user, score]);
+              }
+            }
+          } else {
+            rank.push(x.split(" "));
+          }
+
+          rank.sort((a, b) => b[1] - a[1]);
+        }
+
+        return answer;
+      }
+      console.log(
+        solution(3, [
+          "alex111 100",
+          "cheries2 200",
+          "coco 150",
+          "luna 100",
+          "alex111 120",
+          "coco 300",
+          "cheries2 110",
+        ])
+      );
+    </script>
+  </body>
+</html>
