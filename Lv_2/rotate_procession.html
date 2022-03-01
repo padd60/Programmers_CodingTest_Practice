@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(rows, columns, queries) {
+        let answer = [];
+
+        let arr = [];
+
+        let fillNum = 1;
+
+        for (let i = 0; i < rows; i++) {
+          let tmp = [];
+          for (let j = 0; j < columns; j++) {
+            tmp.push(fillNum++);
+          }
+          arr.push(tmp);
+        }
+
+        for (let k = 0; k < queries.length; k++) {
+          const startX = queries[k][0] - 1;
+          const startY = queries[k][1] - 1;
+
+          const endX = queries[k][2] - 1;
+          const endY = queries[k][3] - 1;
+
+          let min = rows * columns;
+
+          for (let i = startX; i < endX; i++) {
+            min = Math.min(min, arr[i][startY], arr[i + 1][startY]);
+
+            [arr[i][startY], arr[i + 1][startY]] = [
+              arr[i + 1][startY],
+              arr[i][startY],
+            ];
+          }
+
+          for (let i = startY; i < endY; i++) {
+            min = Math.min(min, arr[endX][i], arr[endX][i + 1]);
+
+            [arr[endX][i], arr[endX][i + 1]] = [arr[endX][i + 1], arr[endX][i]];
+          }
+
+          for (let i = endX; i > startX; i--) {
+            min = Math.min(min, arr[i][endY], arr[i - 1][endY]);
+
+            [arr[i][endY], arr[i - 1][endY]] = [arr[i - 1][endY], arr[i][endY]];
+          }
+
+          for (let i = endY; i > startY + 1; i--) {
+            min = Math.min(min, arr[startX][i], arr[startX][i - 1]);
+
+            [arr[startX][i], arr[startX][i - 1]] = [
+              arr[startX][i - 1],
+              arr[startX][i],
+            ];
+          }
+
+          answer.push(min);
+        }
+
+        return answer;
+      }
+
+      console.log(
+        solution(6, 10, [
+          [2, 2, 5, 4],
+          [3, 3, 6, 6],
+          [5, 1, 6, 3],
+        ])
+      );
+    </script>
+  </body>
+</html>
