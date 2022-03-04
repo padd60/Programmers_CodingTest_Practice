@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function caseCaculator(calculate, copyMath) {
+        for (let x of calculate) {
+          while (copyMath.includes(x)) {
+            let findIndex = copyMath.findIndex((item) => item === x);
+
+            if (findIndex !== -1) {
+              if (x === "*") {
+                copyMath.splice(
+                  findIndex - 1,
+                  3,
+                  Number(copyMath[findIndex - 1]) *
+                    Number(copyMath[findIndex + 1])
+                );
+              }
+              if (x === "+") {
+                copyMath.splice(
+                  findIndex - 1,
+                  3,
+                  Number(copyMath[findIndex - 1]) +
+                    Number(copyMath[findIndex + 1])
+                );
+              }
+              if (x === "-") {
+                copyMath.splice(
+                  findIndex - 1,
+                  3,
+                  Number(copyMath[findIndex - 1]) -
+                    Number(copyMath[findIndex + 1])
+                );
+              }
+            }
+          }
+        }
+
+        return Math.abs(copyMath[0]);
+      }
+
+      function solution(expression) {
+        let answer = 0;
+
+        let math = [];
+
+        let tmp = "";
+
+        for (let x of expression) {
+          if (x === "*" || x === "+" || x === "-") {
+            math.push(tmp);
+            tmp = "";
+            math.push(x);
+          } else {
+            tmp += x;
+          }
+        }
+
+        if (tmp.length > 0) {
+          math.push(tmp);
+          tmp = "";
+        }
+
+        let result = [];
+
+        result.push(caseCaculator(["*", "+", "-"], [...math]));
+        result.push(caseCaculator(["*", "-", "+"], [...math]));
+        result.push(caseCaculator(["+", "*", "-"], [...math]));
+        result.push(caseCaculator(["+", "-", "*"], [...math]));
+        result.push(caseCaculator(["-", "+", "*"], [...math]));
+        result.push(caseCaculator(["-", "*", "+"], [...math]));
+
+        answer = Math.max(...result);
+
+        return answer;
+      }
+      console.log(solution("100-200*300-500+20"));
+      console.log(solution("2*2*2*2*2-2*2*2"));
+    </script>
+  </body>
+</html>
