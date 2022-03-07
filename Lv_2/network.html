@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(n, computers) {
+        let answer = 0;
+
+        let check = Array(n).fill(0);
+
+        function DFS(idx) {
+          check[idx] = 1;
+
+          for (let j = 0; j < computers.length; j++) {
+            if (computers[idx][j] === 1 && check[j] === 0) {
+              DFS(j);
+            }
+          }
+        }
+
+        for (let i = 0; i < computers.length; i++) {
+          if (check[i] === 0) {
+            DFS(i);
+            answer += 1;
+          }
+        }
+
+        return answer;
+      }
+      /**
+
+      console.log(
+        solution(3, [
+          [1, 1, 0],
+          [1, 1, 0],
+          [0, 0, 1],
+        ])
+      );
+      console.log(
+        solution(3, [
+          [1, 0, 1],
+          [0, 1, 0],
+          [1, 0, 1],
+        ])
+      );
+
+      */
+      console.log(
+        solution(3, [
+          [1, 1, 0],
+          [1, 1, 1],
+          [0, 1, 1],
+        ])
+      );
+
+      /**
+
+      console.log(
+        solution(4, [
+          [1, 1, 0, 1],
+          [1, 1, 0, 0],
+          [0, 0, 1, 1],
+          [1, 0, 1, 1],
+        ])
+      );
+      console.log(
+        solution(4, [
+          [1, 0, 0, 0],
+          [0, 1, 0, 0],
+          [0, 0, 1, 0],
+          [0, 0, 0, 1],
+        ])
+      );
+      console.log(
+        solution(4, [
+          [1, 0, 0, 1],
+          [0, 1, 1, 0],
+          [0, 1, 1, 0],
+          [1, 1, 0, 1],
+        ])
+      );
+      */
+
+      console.log(
+        solution(5, [
+          [1, 0, 0, 1, 1],
+          [0, 1, 1, 0, 0],
+          [0, 1, 1, 0, 0],
+          [1, 0, 0, 1, 1],
+          [1, 0, 0, 1, 1],
+        ])
+      );
+    </script>
+  </body>
+</html>
