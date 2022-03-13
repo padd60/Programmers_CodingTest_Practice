@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(money, costs) {
+        let answer = 0;
+
+        let coin = [1, 5, 10, 50, 100, 500];
+
+        let cost_sequance = [];
+
+        for (let i = 0; i < costs.length; i++) {
+          cost_sequance.push([coin[i], costs[i]]);
+        }
+
+        cost_sequance.sort((a, b) => {
+          return b[0] / b[1] - a[0] / a[1];
+        });
+
+        for (let j = 0; j < cost_sequance.length; j++) {
+          let [coin, cost] = cost_sequance[j];
+
+          let coin_money = parseInt(money / coin) * coin;
+
+          let coin_cost = parseInt(money / coin) * cost;
+
+          if (money === 0) break;
+
+          if (money > 0) {
+            money = money - coin_money;
+          }
+
+          answer += coin_cost;
+        }
+
+        return answer;
+      }
+      console.log(solution(4578, [1, 4, 99, 35, 50, 1000]));
+      console.log(solution(1999, [2, 11, 20, 100, 200, 600]));
+    </script>
+  </body>
+</html>
+
+<!-- 
+          queue.push([coin[0], costs[0]]);
+
+        while (queue.length > 0) {
+          let [coin, cost] = queue.shift();
+
+          costs.forEach((item, index) => {
+            if (visited.includes(coin[index])) return;
+
+            if (money / coin > 0 && money > 0) {
+              visited.push(coin);
+              money = money - coin * (money / coin);
+              queue.push([coin[index + 1], costs[index + 1]]);
+            }
+          });
+        }
+ -->

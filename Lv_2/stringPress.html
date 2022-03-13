@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = 0;
+
+        let min = Number.MAX_SAFE_INTEGER;
+
+        for (let i = 1; i <= s.length; i++) {
+          let arr = [];
+          let tmp = "";
+          for (let j = 0; j < s.length; j++) {
+            tmp += s[j];
+
+            if (tmp.length >= i) {
+              arr.push(tmp);
+              tmp = "";
+            }
+          }
+
+          if (tmp.length > 0) {
+            arr.push(tmp);
+            tmp = "";
+          }
+
+          let renew_arr = [arr[0]];
+
+          for (let k = 1; k < arr.length; k++) {
+            let recentWord = renew_arr.pop();
+
+            let findNumber = -1;
+
+            for (let u = recentWord.length - 1; u >= 0; u--) {
+              if (!isNaN(Number(recentWord[u]))) {
+                findNumber = u;
+                break;
+              }
+            }
+
+            if (
+              findNumber !== -1 &&
+              recentWord.slice(findNumber + 1, recentWord.length) === arr[k]
+            ) {
+              renew_arr.push(
+                Number(recentWord.slice(0, findNumber + 1)) + 1 + arr[k]
+              );
+            } else if (findNumber === -1 && recentWord === arr[k]) {
+              renew_arr.push(2 + arr[k]);
+            } else {
+              renew_arr.push(recentWord, arr[k]);
+            }
+          }
+
+          let textlength = renew_arr.join("").length;
+
+          min = Math.min(min, textlength);
+        }
+
+        answer = min;
+
+        return answer;
+      }
+
+      //console.log(solution("aabbaccc"));
+      //console.log(solution("ababcdcdababcdcd"));
+      //console.log(solution("abcabcdede"));
+      //console.log(solution("abcabcabcabcdededededede"));
+      //console.log(solution("xababcdcdababcdcd"));
+      console.log(
+        solution(
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        )
+      );
+    </script>
+  </body>
+</html>

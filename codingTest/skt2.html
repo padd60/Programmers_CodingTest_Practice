@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(n, clockwise) {
+        let answer = [[]];
+
+        let init_array = Array.from({ length: n }, () => Array(n).fill(0));
+
+        console.log(init_array);
+
+        let maxCount = Math.floor(init_array.length / 2);
+
+        console.log(maxCount);
+
+        let cnt = 1;
+
+        //1번
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n - 1; j++) {
+            if (i > 0) break;
+            init_array[i][j] = cnt++;
+          }
+
+          for (let j = 1; j < n; j++) {
+            if (i !== n - 2) break;
+            if (j > maxCount) break;
+            init_array[j][i] = cnt++;
+          }
+
+          for (let j = 0; j < n - 1; j++) {
+            if (i !== maxCount) break;
+            if (j !== maxCount) break;
+            init_array[i][j] = cnt++;
+
+            cnt = 0;
+          }
+        }
+
+        return answer;
+      }
+
+      console.log(solution(5, true));
+    </script>
+  </body>
+</html>
