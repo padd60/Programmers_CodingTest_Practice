@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(estimates, k) {
+        let answer = 0;
+
+        let queue = [];
+
+        let sum = 0;
+
+        let max = Number.MIN_SAFE_INTEGER;
+
+        for (let i = 0; i < estimates.length; i++) {
+          sum += estimates[i];
+          queue.push(estimates[i]);
+
+          if (queue.length > k) {
+            let minus = queue.shift();
+            sum -= minus;
+          }
+
+          if (sum > max) {
+            max = sum;
+          }
+        }
+
+        answer = max;
+
+        return answer;
+      }
+      console.log(solution([5, 1, 9, 8, 10, 5], 3));
+      console.log(solution([10, 1, 10, 1, 1, 4, 3, 10], 6));
+    </script>
+  </body>
+</html>

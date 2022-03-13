@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(p) {
+        let answer = -1;
+
+        tmp = 0;
+
+        let split_arr = p.split("><");
+
+        for (let x of split_arr[0]) {
+          if (x === "<") tmp++;
+        }
+
+        for (let x of split_arr[split_arr.length - 1]) {
+          if (x === ">") tmp++;
+        }
+
+        answer = tmp;
+
+        return answer;
+      }
+      console.log(solution("<<<><"));
+      console.log(solution("><>>>"));
+      console.log(solution("<<<>>><<<<<><>>>"));
+    </script>
+  </body>
+</html>

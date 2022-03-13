@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function minusSearch(arr) {
+        let minus_arr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === "-") minus_arr.push(i);
+        }
+
+        let min = Number.MAX_SAFE_INTEGER;
+
+        let minusIndex = 0;
+
+        for (let j = 0; j < minus_arr.length; j++) {
+          let result =
+            Number(arr[minus_arr[j] - 1]) - Number(arr[minus_arr[j] + 1]);
+
+          if (result < min) {
+            min = result;
+            minusIndex = minus_arr[j];
+          }
+        }
+
+        arr.splice(minusIndex - 1, 3, min);
+
+        return arr;
+      }
+
+      function plusSearch(arr) {
+        let plus_arr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === "+") plus_arr.push(i);
+        }
+
+        let max = Number.MIN_SAFE_INTEGER;
+
+        let plusIndex = 0;
+
+        for (let j = 0; j < plus_arr.length; j++) {
+          let result =
+            Number(arr[plus_arr[j] - 1]) + Number(arr[plus_arr[j] + 1]);
+
+          if (result > max) {
+            max = result;
+            plusIndex = plus_arr[j];
+          }
+        }
+
+        arr.splice(plusIndex - 1, 3, max);
+
+        return arr;
+      }
+
+      function solution(arr) {
+        let answer = -1;
+
+        arr = minusSearch(arr);
+
+        while (arr.includes("+")) {
+          arr = plusSearch(arr);
+        }
+
+        while (arr.includes("-")) {
+          arr = minusSearch(arr);
+        }
+
+        answer = arr[0];
+
+        return answer;
+      }
+      console.log(solution(["1", "-", "3", "+", "5", "-", "8"]));
+      console.log(solution(["5", "-", "3", "+", "1", "+", "2", "-", "4"]));
+    </script>
+  </body>
+</html>
+
+<!-- 
+
+        function minusSearch(arr) {
+        let minus_arr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === "-") minus_arr.push(i);
+        }
+
+        console.log(minus_arr);
+
+        let min = Number.MAX_SAFE_INTEGER;
+
+        let minusIndex = 0;
+
+        for (let j = 0; j < minus_arr.length; j++) {
+          let result =
+            Number(arr[minus_arr[j] - 1]) - Number(arr[minus_arr[j] + 1]);
+
+          if (result < min) {
+            min = result;
+            minusIndex = minus_arr[j];
+          }
+        }
+
+        console.log(minusIndex, min);
+
+        arr.splice(minusIndex - 1, 3, min);
+
+        console.log(arr);
+
+        return arr;
+      }
+
+      function plusSearch(arr) {
+        let plus_arr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === "+") plus_arr.push(i);
+        }
+
+        console.log(plus_arr);
+
+        let max = Number.MIN_SAFE_INTEGER;
+
+        let plusIndex = 0;
+
+        for (let j = 0; j < plus_arr.length; j++) {
+          let result =
+            Number(arr[plus_arr[j] - 1]) + Number(arr[plus_arr[j] + 1]);
+
+          if (result > max) {
+            max = result;
+            plusIndex = plus_arr[j];
+          }
+        }
+
+        arr.splice(plusIndex - 1, 3, max);
+
+        console.log(arr);
+
+        return arr;
+      }
+
+      function solution(arr) {
+        let answer = -1;
+
+        arr = minusSearch(arr);
+
+        while (arr.includes("+")) {
+          arr = plusSearch(arr);
+        }
+
+        while (arr.includes("-")) {
+          arr = minusSearch(arr);
+        }
+
+        answer = arr[0];
+
+        return answer;
+      }
+ -->

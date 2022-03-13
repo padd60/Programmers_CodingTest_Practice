@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr, k, t) {
+        let answer = 0;
+
+        let visited = Array(arr.length).fill(false);
+
+        let tmp = [];
+
+        function DFS(cur, path) {
+          if (path.reduce((acc, item) => acc + item) > t) return;
+
+          if (path.length >= k && path.reduce((acc, item) => acc + item) <= t) {
+            if (tmp.length > 0) {
+              let flag = false;
+
+              for (let x of tmp) {
+                x.sort((a, b) => a - b);
+                path.sort((a, b) => a - b);
+
+                if (JSON.stringify(x) === JSON.stringify(path)) flag = true;
+              }
+
+              if (!flag) tmp.push(path);
+            } else {
+              tmp.push(path);
+            }
+          }
+
+          for (let i = 0; i < arr.length; i++) {
+            if (visited[i]) continue;
+
+            visited[i] = true;
+            DFS(arr[i], [...path, arr[i]]);
+            visited[i] = false;
+          }
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+          visited[i] = true;
+          DFS(arr[i], [arr[i]]);
+        }
+
+        answer = tmp.length;
+
+        return answer;
+      }
+      console.log(solution([2, 5, 3, 8, 1], 3, 11));
+      console.log(solution([1, 1, 2, 2], 2, 3));
+      console.log(solution([1, 2, 3, 2], 2, 2));
+    </script>
+  </body>
+</html>
