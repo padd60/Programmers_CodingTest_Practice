@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(num_teams, remote_tasks, office_tasks, employees) {
+        const answer = [];
+
+        const Remote = [];
+        const office = [];
+
+        employees.forEach((item, index) => {
+          let flag = false;
+
+          item.split(" ").forEach((item) => {
+            if (isNaN(Number(item))) {
+              if (office_tasks.includes(item)) flag = true;
+            }
+          });
+
+          const team = item.split(" ")[0];
+
+          if (flag) {
+            office.push(team);
+          } else {
+            Remote.push([team, index + 1]);
+          }
+        });
+
+        Remote.sort((a, b) => a[1] - b[1]).forEach((item) => {
+          if (office.includes(item[0])) {
+            answer.push(item[1]);
+          } else {
+            office.push(item[0]);
+          }
+        });
+
+        return answer;
+      }
+      console.log(
+        solution(
+          3,
+          ["development", "marketing", "hometask"],
+          ["recruitment", "education", "officetask"],
+          [
+            "1 development hometask",
+            "1 recruitment marketing",
+            "2 hometask",
+            "2 development marketing hometask",
+            "3 marketing",
+            "3 officetask",
+            "3 development",
+          ]
+        )
+      );
+    </script>
+  </body>
+</html>

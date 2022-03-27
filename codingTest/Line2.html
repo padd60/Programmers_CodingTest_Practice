@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const getCombinations = function (arr, selectNumber) {
+        const results = [];
+        if (selectNumber === 1) return arr.map((value) => [value]);
+
+        arr.forEach((fixed, index, origin) => {
+          const rest = origin.slice(index + 1);
+          const combinations = getCombinations(rest, selectNumber - 1);
+          const attached = combinations.map((combination) => [
+            fixed,
+            ...combination,
+          ]);
+          results.push(...attached);
+        });
+
+        return results;
+      };
+
+      function solution(sentences, n) {
+        let answer = -1;
+
+        const set = new Set();
+
+        const strArr = [];
+
+        sentences.forEach((item) => {
+          const newSet = new Set();
+          item.split("").forEach((item) => {
+            if (item !== " ") {
+              if (item.toLowerCase() !== item) {
+                set.add("shift");
+                newSet.add("shift");
+              }
+              set.add(item.toLowerCase());
+              newSet.add(item.toLowerCase());
+            }
+          });
+          strArr.push([...newSet]);
+        });
+
+        const setArr = [...set];
+
+        console.log(setArr);
+        console.log(strArr);
+
+        const combination = getCombinations(setArr, 5);
+
+        console.log(combination);
+
+        return answer;
+      }
+      console.log(solution(["line in line", "LINE", "in lion"], 5));
+    </script>
+  </body>
+</html>

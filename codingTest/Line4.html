@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr, brr) {
+        let answer = -1;
+
+        let cnt = 0;
+
+        const newArr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          newArr.push(arr[i] - brr[i]);
+        }
+
+        console.log(newArr);
+
+        for (let j = 0; j < Math.floor(newArr.length / 2); j++) {
+          const temp = newArr[j];
+
+          newArr[j] = 0;
+
+          if (newArr[j + 1] + temp === 0) {
+            cnt++;
+            break;
+          } else {
+            newArr[j + 1] = newArr[j + 1] + temp;
+            cnt++;
+          }
+        }
+
+        for (
+          let k = newArr.length - 1;
+          k > Math.floor(newArr.length / 2);
+          k--
+        ) {
+          const temp = newArr[k];
+
+          newArr[k] = 0;
+
+          if (newArr[k - 1] + temp === 0) {
+            cnt++;
+            break;
+          } else {
+            newArr[k - 1] = newArr[k - 1] + temp;
+            cnt++;
+          }
+        }
+
+        if (cnt > 0) answer = cnt;
+
+        return answer;
+      }
+      console.log(solution([3, 7, 2, 4], [4, 5, 5, 2]));
+      console.log(solution([6, 2, 2, 6], [4, 4, 4, 4]));
+    </script>
+  </body>
+</html>

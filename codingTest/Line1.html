@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(logs) {
+        let answer = -1;
+
+        let cnt = 0;
+
+        logs.forEach((item) => {
+          if (item.length > 100) {
+            cnt++;
+            return;
+          }
+
+          const arr = item.split(" : ").flatMap((item) => item.split(" "));
+
+          if (arr.length !== 8) {
+            cnt++;
+            return;
+          }
+
+          if (
+            !arr.includes("team_name") ||
+            !arr.includes("application_name") ||
+            !arr.includes("error_level") ||
+            !arr.includes("message")
+          ) {
+            cnt++;
+            return;
+          }
+
+          const regExpNumber = /[0-9]/g;
+
+          const regExpSpecial =
+            /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+          let flag = false;
+
+          arr.forEach((item) => {
+            if (
+              item !== "team_name" &&
+              item !== "application_name" &&
+              item !== "error_level" &&
+              item !== "message"
+            ) {
+              if (item.match(regExpNumber)) {
+                flag = true;
+              } else if (item.match(regExpSpecial)) {
+                flag = true;
+              }
+            }
+          });
+
+          if (flag) {
+            cnt++;
+            return;
+          }
+        });
+
+        if (cnt > 0) answer = cnt;
+
+        return answer;
+      }
+
+      console.log(
+        solution([
+          "team_name : MyTeam application_name : YourApp error_level : info messag : IndexOutOfRange",
+          "no such file or directory",
+          "team_name : recommend application_name : recommend error_level : info message : RecommendSucces11",
+          "team_name : recommend application_name : recommend error_level : info message : Success!",
+          "   team_name : db application_name : dbtest error_level : info message : test",
+          "team_name     : db application_name : dbtest error_level : info message : test",
+          "team_name : TeamTest application_name : TestApplication error_level : info message : ThereIsNoError",
+        ])
+      );
+    </script>
+  </body>
+</html>

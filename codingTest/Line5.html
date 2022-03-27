@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(abilities, k) {
+        let answer = 0;
+
+        const sortAbil = abilities.sort((a, b) => a - b);
+
+        while (sortAbil.length > 0) {
+          const item1 = sortAbil.pop();
+          const item2 = sortAbil.pop();
+
+          if (abilities.length % 2 === 0) {
+            if (item1 === item2) {
+              answer += item2;
+            } else if (item1 !== item2 && k > 0) {
+              k = k - 1;
+              if (item1 !== undefined) {
+                answer += item1;
+              }
+            } else {
+              if (item2 !== undefined) {
+                answer += item2;
+              }
+            }
+          } else {
+            if (item1 === item2) {
+              answer += item2;
+            } else if (item1 !== item2 && k > 1) {
+              k = k - 1;
+              if (item1 !== undefined) {
+                answer += item1;
+              }
+            } else if (item1 !== item2) {
+              if (item2 !== undefined) {
+                answer += item2;
+              }
+            } else {
+              k = k - 1;
+              if (item1 !== undefined) {
+                answer += item1;
+              }
+            }
+          }
+        }
+
+        return answer;
+      }
+      console.log(solution([2, 8, 3, 6, 1, 9, 1, 9], 2));
+      console.log(solution([7, 6, 8, 9, 10], 1));
+    </script>
+  </body>
+</html>
