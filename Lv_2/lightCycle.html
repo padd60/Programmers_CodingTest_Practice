@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(grid) {
+        const result = [];
+        // 갈 수 있는 모든 방향의 길을 생성
+        const root = Array.from(Array(grid.length), () =>
+          Array.from(Array(grid[0].length), () => Array(4).fill(true))
+        );
+
+        console.log(root);
+
+        // 움직일 방향 상,하,좌,우
+        const pos = [
+          [-1, 0],
+          [1, 0],
+          [0, -1],
+          [0, 1],
+        ];
+
+        root.forEach((row, rowIdx) => {
+          row.forEach((col, colIdx) => {
+            col.forEach((item, idx) => {
+              // 모두 한번씩 살펴보며 해당 경로가 탐색되지 않았다면 싸이클을 구해 몇번을 도는지 확인하여 정답 배열에 삽입 ( 초기에 모든 배열에 true 를 넣은 이유 )
+              if (item) {
+                result.push(CycleCount(rowIdx, colIdx, idx));
+              }
+            });
+          });
+        });
+        // 몇번의 싸이클을 돌 수 있는지 확인하는 함수
+        function CycleCount(rowIdx, colIdx, idx) {
+          let count = 0;
+
+          while (1) {
+            // 현재의 좌표값이 지나왔던 자리라면 반복을 멈춤
+            if (!root[rowIdx][colIdx][idx]) break;
+            // 현재 좌표를 지나갔다고 표시
+            root[rowIdx][colIdx][idx] = false;
+            count++;
+
+            // 현재 좌표의 위치 적용
+            rowIdx += pos[idx][0];
+            colIdx += pos[idx][1];
+
+            // 양 끝에서 넘어갔다면 반대편 처음 점으로
+            if (rowIdx < 0) rowIdx = root.length - 1;
+            if (rowIdx >= root.length) rowIdx = 0;
+            if (colIdx < 0) colIdx = root[0].length - 1;
+            if (colIdx >= root[0].length) colIdx = 0;
+
+            // 처음 상,하,좌,우 를 기준으로 왼쪽 혹은 오른쪽인 경우 다음 방향을 선언
+            if (grid[rowIdx][colIdx] === "L") idx = [2, 3, 1, 0][idx];
+            if (grid[rowIdx][colIdx] === "R") idx = [3, 2, 0, 1][idx];
+          }
+
+          return count;
+        }
+        return result.sort((a, b) => a - b);
+      }
+      console.log(solution(["SL", "LR"]));
+    </script>
+  </body>
+</html>
